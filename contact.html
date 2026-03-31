@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Alzheimer's Disease Diagnosis{% endblock %}
+
+{% block content %}
+<div class="page-background">
+    <div class="container py-5">
+        <div class="row justify-content-center" style="padding-top: 80px;">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-4 fw-bold text-white mb-3">
+                        <i class="fas fa-envelope me-3"></i>Get In Touch
+                    </h1>
+                    <p class="lead text-light">
+                        Have questions about our AI technology? We're here to help!
+                    </p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Contact Form -->
+                    <div class="col-lg-8">
+                        <div class="card card-custom">
+                            <div class="card-header">
+                                <h3 class="mb-0">
+                                    <i class="fas fa-paper-plane me-2"></i>Send us a Message
+                                </h3>
+                            </div>
+                            <div class="card-body p-4">
+                                <form method="POST" id="contactForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-4">
+                                                <label for="name" class="form-label fw-bold">
+                                                    <i class="fas fa-user me-2"></i>Full Name
+                                                </label>
+                                                <input type="text" 
+                                                       class="form-control form-control-custom" 
+                                                       id="name" 
+                                                       name="name" 
+                                                       required 
+                                                       placeholder="Enter your full name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-4">
+                                                <label for="email" class="form-label fw-bold">
+                                                    <i class="fas fa-envelope me-2"></i>Email Address
+                                                </label>
+                                                <input type="email" 
+                                                       class="form-control form-control-custom" 
+                                                       id="email" 
+                                                       name="email" 
+                                                       required 
+                                                       placeholder="your@email.com">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="subject" class="form-label fw-bold">
+                                            <i class="fas fa-tag me-2"></i>Subject
+                                        </label>
+                                        <select class="form-control form-control-custom" id="subject" name="subject" required>
+                                            <option value="">Select a topic...</option>
+                                            <option value="general">General Inquiry</option>
+                                            <option value="technical">Technical Support</option>
+                                            <option value="research">Research Collaboration</option>
+                                            <option value="medical">Medical Questions</option>
+                                            <option value="partnership">Partnership Opportunities</option>
+                                            <option value="feedback">Feedback & Suggestions</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="message" class="form-label fw-bold">
+                                            <i class="fas fa-comment me-2"></i>Message
+                                        </label>
+                                        <textarea class="form-control form-control-custom" 
+                                                  id="message" 
+                                                  name="message" 
+                                                  rows="6" 
+                                                  required 
+                                                  placeholder="Tell us how we can help you..."></textarea>
+                                        <div class="form-text">
+                                            <small class="text-muted">
+                                                <span id="charCount">0</span>/500 characters
+                                            </small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="newsletter">
+                                            <label class="form-check-label text-muted" for="newsletter">
+                                                Subscribe to our newsletter for AI research updates
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-custom btn-lg">
+                                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+
+<style>
+    .page-background {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+        min-height: 100vh;
+    }
+    
+    .accordion-button {
+        background: transparent;
+        border: none;
+        padding: 1rem 0;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+        box-shadow: none;
+    }
+    
+    .accordion-button::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232563eb'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+    
+    .list-group-item {
+        transition: all 0.3s ease;
+    }
+    
+    .list-group-item:hover {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color);
+        transform: translateX(5px);
+    }
+    
+    .card-custom {
+        animation: slideInUp 0.6s ease forwards;
+    }
+    
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    const messageTextarea = document.getElementById('message');
+    const charCount = document.getElementById('charCount');
+    
+    // Character counter
+    messageTextarea.addEventListener('input', function() {
+        const length = this.value.length;
+        charCount.textContent = length;
+        
+        if (length > 450) {
+            charCount.classList.add('text-warning');
+        } else if (length > 500) {
+            charCount.classList.remove('text-warning');
+            charCount.classList.add('text-danger');
+        } else {
+            charCount.classList.remove('text-warning', 'text-danger');
+        }
+        
+        if (length > 500) {
+            this.value = this.value.substring(0, 500);
+            charCount.textContent = 500;
+        }
+    });
+    
+    // Form submission
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value;
+        const message = messageTextarea.value.trim();
+        
+        // Basic validation
+        if (name.length < 2) {
+            alert('Please enter a valid name');
+            return;
+        }
+        
+        if (!email.includes('@')) {
+            alert('Please enter a valid email address');
+            return;
+        }
+        
+        if (!subject) {
+            alert('Please select a subject');
+            return;
+        }
+        
+        if (message.length < 10) {
+            alert('Please enter a more detailed message');
+            return;
+        }
+        
+        // Show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+        submitBtn.disabled = true;
+        
+        // Simulate form submission (in real app, this would make an API call)
+        setTimeout(() => {
+            // Show success message
+            const successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success alert-custom fade show';
+            successAlert.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-check-circle me-3"></i>
+                    <div>
+                        <h6 class="fw-bold mb-1">Message Sent Successfully!</h6>
+                        <small>Thank you for contacting us. We'll respond within 24 hours.</small>
+                    </div>
+                </div>
+            `;
+            
+            // Insert the alert before the form
+            contactForm.parentNode.insertBefore(successAlert, contactForm);
+            
+            // Reset form
+            contactForm.reset();
+            charCount.textContent = '0';
+            
+            // Reset button
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            
+            // Auto-hide alert after 5 seconds
+            setTimeout(() => {
+                successAlert.remove();
+            }, 5000);
+            
+            // Scroll to success message
+            successAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+        }, 2000);
+    });
+    
+    // Auto-focus on name field
+    document.getElementById('name').focus();
+});
+</script>
+{% endblock %}
