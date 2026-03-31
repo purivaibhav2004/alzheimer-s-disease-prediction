@@ -1,0 +1,14 @@
+Steps to run the code .. 
+
+
+1. open anaconda prompt and type below command 
+
+cd C:\Users\vaibh\Downloads\Alz_predcition_main_final
+
+and hit enter
+
+2. now type conda activate alzy_det  and hit enter
+
+3. Type python app.py and hit enter
+
+4. Open the  http://127.0.0.1:5000 in chrome or end and its done :)
