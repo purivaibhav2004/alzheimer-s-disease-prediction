@@ -1,0 +1,368 @@
+{% extends "base.html" %}
+
+{% block title %}AI Prediction - Alzheimer's Disease Diagnosis{% endblock %}
+
+{% block content %}
+<div class="page-background">
+    <div class="container py-5">
+        <div class="row justify-content-center" style="padding-top: 80px;">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-4 fw-bold mb-3" style="color: #222;">
+                        <i class="fas fa-brain me-3" style="color: #ffcc00"></i> Analysis
+                    </h1>
+                    <p class="lead mb-0" style="color: #444;">
+                        Upload your MRI scan for instant Alzheimer's disease detection and classification
+                    </p>
+                </div>
+
+                <!-- Upload Section -->
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="card card-custom h-100">
+                            <div class="card-header text-center">
+                                <h4 class="mb-0">
+                                    <i class="fas fa-upload me-2"></i>Upload MRI Scan
+                                </h4>
+                            </div>
+                            <div class="card-body p-4">
+                                <form id="uploadForm" enctype="multipart/form-data">
+                                    <div class="mb-4">
+                                        <div class="upload-zone" id="uploadZone">
+                                            <div class="upload-content text-center">
+                                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                                <h5 class="mt-3 mb-2">Drag & Drop Your MRI Scan</h5>
+                                                <p class="text-muted mb-3">or click to browse files</p>
+                                                <input type="file" 
+                                                       id="fileInput" 
+                                                       name="file" 
+                                                       accept="image/*" 
+                                                       class="d-none">
+                                                <button type="button" 
+                                                        class="btn btn-outline-custom" 
+                                                        onclick="document.getElementById('fileInput').click()">
+                                                    <i class="fas fa-folder-open me-2"></i>Browse Files
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <small class="text-muted">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            Supported formats: JPEG, PNG, JPG (Max 16MB)
+                                        </small>
+                                    </div>
+                                    
+                                    <div class="d-grid">
+                                        <button type="submit" 
+                                                class="btn btn-custom btn-lg" 
+                                                id="analyzeBtn" 
+                                                disabled>
+                                            <i class="fas fa-microscope me-2"></i>Analyze Scan
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                                <!-- Loading State -->
+                                <div id="loadingState" class="text-center py-4" style="display: none;">
+                                    <div class="spinner-custom mx-auto mb-3"></div>
+                                    <h6>Analyzing your MRI scan...</h6>
+                                    <p class="text-muted small">This may take a few seconds</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div class="col-lg-6">
+                        <div class="card card-custom h-100">
+                            <div class="card-header text-center">
+                                <h4 class="mb-0">
+                                    <i class="fas fa-chart-line me-2"></i>Analysis Results
+                                </h4>
+                            </div>
+                            <div class="card-body p-4">
+                                <div id="resultsContainer" class="text-center text-muted">
+                                    <i class="fas fa-brain" style="font-size: 4rem; opacity: 0.3;"></i>
+                                    <h6 class="mt-3">No Analysis Yet</h6>
+                                    <p class="small">Upload an MRI scan to see results here</p>
+                                </div>
+                                
+                                <!-- Results will be populated here -->
+                                <div id="analysisResults" style="display: none;">
+                                    <div class="text-center mb-4">
+                                        <img id="uploadedImage" class="img-fluid rounded" style="max-height: 200px;" alt="Uploaded MRI">
+                                    </div>
+                                    
+                                    <div class="result-card p-3 mb-3 rounded" id="predictionCard">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1 text-muted">Prediction</h6>
+                                                <h5 class="mb-0 fw-bold" id="predictionText"></h5>
+                                            </div>
+                                            <div class="text-end">
+                                                <h6 class="mb-1 text-muted">Confidence</h6>
+                                                <h5 class="mb-0 fw-bold" id="confidenceText"></h5>
+                                            </div>
+                                        </div>
+                                        <div class="progress mt-3" style="height: 8px;">
+                                            <div id="confidenceBar" class="progress-bar" role="progressbar"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- <div class="alert alert-info alert-custom">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Disclaimer:</strong> This is an  analysis for research purposes only. 
+                                        Please consult with medical professionals for clinical diagnosis.
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Information Cards -->
+                <div class="row g-4 mt-4">
+                    <div class="col-md-4">
+                        <div class="card card-custom bg-primary text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-shield-alt mb-3" style="font-size: 2rem;"></i>
+                                <h6 class="fw-bold">Secure Processing</h6>
+                                <small>Your images are processed securely and not stored</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-custom bg-success text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-bolt mb-3" style="font-size: 2rem;"></i>
+                                <h6 class="fw-bold">Instant Results</h6>
+                                <small>Get analysis results in under 5 seconds</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-custom bg-warning text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-graduation-cap mb-3" style="font-size: 2rem;"></i>
+                                <h6 class="fw-bold">Research Grade</h6>
+                                <small>Built on validated medical research datasets</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.upload-zone {
+    border: 3px dashed #dee2e6;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: rgba(248, 249, 250, 0.5);
+}
+
+.upload-zone:hover,
+.upload-zone.dragover {
+    border-color: var(--primary-color);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    opacity: 0.7;
+}
+
+.result-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 1px solid #e2e8f0;
+}
+
+.progress-bar {
+    transition: width 0.8s ease;
+}
+
+.page-background {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    min-height: 100vh;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.upload-zone.processing {
+    animation: pulse 1.5s infinite;
+    border-color: var(--accent-color);
+}
+</style>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadForm = document.getElementById('uploadForm');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const loadingState = document.getElementById('loadingState');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const analysisResults = document.getElementById('analysisResults');
+
+    // Drag and drop functionality
+    uploadZone.addEventListener('click', () => fileInput.click());
+
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('dragover');
+    });
+
+    uploadZone.addEventListener('dragleave', () => {
+        uploadZone.classList.remove('dragover');
+    });
+
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            handleFileSelect();
+        }
+    });
+
+    // File input change
+    fileInput.addEventListener('change', handleFileSelect);
+
+    function handleFileSelect() {
+        const file = fileInput.files[0];
+        if (file) {
+            // Validate file type
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+            if (!allowedTypes.includes(file.type)) {
+                alert('Please select a valid image file (JPEG, PNG, JPG, GIF)');
+                return;
+            }
+
+            // Validate file size (16MB)
+            if (file.size > 16 * 1024 * 1024) {
+                alert('File size too large. Please select a file smaller than 16MB.');
+                return;
+            }
+
+            // Update UI
+            uploadZone.innerHTML = `
+                <div class="upload-content text-center">
+                    <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
+                    <h6 class="mt-3 mb-2 text-success">File Selected</h6>
+                    <p class="text-muted">${file.name}</p>
+                    <small class="text-muted">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                </div>
+            `;
+            
+            analyzeBtn.disabled = false;
+        }
+    }
+
+    // Form submission
+    uploadForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('Please select a file first');
+            return;
+        }
+
+        // Show loading state
+        analyzeBtn.style.display = 'none';
+        loadingState.style.display = 'block';
+        uploadZone.classList.add('processing');
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                displayResults(result);
+            } else {
+                throw new Error(result.error || 'Prediction failed');
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+            console.error('Prediction error:', error);
+        } finally {
+            // Hide loading state
+            loadingState.style.display = 'none';
+            analyzeBtn.style.display = 'block';
+            uploadZone.classList.remove('processing');
+        }
+    });
+
+    function displayResults(result) {
+        // Hide initial message
+        resultsContainer.style.display = 'none';
+        
+        // Show uploaded image
+        document.getElementById('uploadedImage').src = result.image;
+        
+        // Set prediction text and styling
+        const predictionText = document.getElementById('predictionText');
+        const confidenceText = document.getElementById('confidenceText');
+        const confidenceBar = document.getElementById('confidenceBar');
+        const predictionCard = document.getElementById('predictionCard');
+        
+        predictionText.textContent = result.prediction;
+        confidenceText.textContent = result.confidence + '%';
+        
+        // Set confidence bar
+        confidenceBar.style.width = result.confidence + '%';
+        
+        // Color coding based on prediction
+        let cardClass = 'bg-light';
+        let barClass = 'bg-primary';
+        
+        if (result.prediction.includes('Non Demented')) {
+            cardClass = 'bg-success bg-opacity-10';
+            barClass = 'bg-success';
+        } else if (result.prediction.includes('Very Mild')) {
+            cardClass = 'bg-warning bg-opacity-10';
+            barClass = 'bg-warning';
+        } else if (result.prediction.includes('Mild')) {
+            cardClass = 'bg-orange bg-opacity-10';
+            barClass = 'bg-orange';
+        } else if (result.prediction.includes('Moderate')) {
+            cardClass = 'bg-danger bg-opacity-10';
+            barClass = 'bg-danger';
+        }
+        
+        predictionCard.className = `result-card p-3 mb-3 rounded ${cardClass}`;
+        confidenceBar.className = `progress-bar ${barClass}`;
+        
+        // Show results
+        analysisResults.style.display = 'block';
+        
+        // Smooth scroll to results
+        analysisResults.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Alzheimer's Disease Diagnosis{% endblock %}
+
+{% block content %}
+<div class="page-background">
+    <div class="container-fluid">
+        <div class="row min-vh-100 align-items-center justify-content-center" style="padding-top: 80px;">
+            <div class="col-lg-5 col-md-7 col-sm-9">
+                <div class="card card-custom shadow-lg">
+                    <div class="card-header text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-brain text-white" style="font-size: 3rem;"></i>
+                        </div>
+                        <h3 class="mb-0 text-white fw-bold">Welcome Back</h3>
+                        <p class="text-light opacity-75 mb-0">Sign in to your Alzheimer's Disease Diagnosis account</p>
+                    </div>
+                    <div class="card-body p-5">
+                        <form method="POST" id="loginForm">
+                            <div class="mb-4">
+                                <label for="username" class="form-label fw-bold">
+                                    <i class="fas fa-user me-2 text-primary"></i>Username
+                                </label>
+                                <input type="text" 
+                                       class="form-control form-control-custom" 
+                                       id="username" 
+                                       name="username" 
+                                       required 
+                                       placeholder="Enter your username"
+                                       autocomplete="username">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="password" class="form-label fw-bold">
+                                    <i class="fas fa-lock me-2 text-primary"></i>Password
+                                </label>
+                                <div class="input-group">
+                                    <input type="password" 
+                                           class="form-control form-control-custom" 
+                                           id="password" 
+                                           name="password" 
+                                           required 
+                                           placeholder="Enter your password"
+                                           autocomplete="current-password">
+                                    <button class="btn btn-outline-secondary" 
+                                            type="button" 
+                                            id="togglePassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe" name="remember">
+                                    <label class="form-check-label text-muted" for="rememberMe">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid mb-4">
+                                <button type="submit" class="btn btn-custom btn-lg" id="loginBtn">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                                </button>
+                            </div>
+                            
+                            <div class="text-center">
+                                <p class="text-muted">
+                                    Don't have an account? 
+                                    <a href="{{ url_for('register') }}" class="text-primary fw-bold text-decoration-none">
+                                        Create one here
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="text-center">
+                            <a href="{{ url_for('index') }}" class="btn btn-outline-custom">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Features Info -->
+                <div class="row g-3 mt-4">
+                    <div class="col-md-4">
+                        <div class="text-center text-white">
+                            <i class="fas fa-brain mb-2" style="font-size: 2rem; opacity: 0.8;"></i>
+                            <h6 class="fw-bold"></h6>
+                            <small class="opacity-75">Advanced neural networks</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center text-white">
+                            <i class="fas fa-shield-alt mb-2" style="font-size: 2rem; opacity: 0.8;"></i>
+                            <h6 class="fw-bold">Secure</h6>
+                            <small class="opacity-75">HIPAA compliant processing</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center text-white">
+                            <i class="fas fa-bolt mb-2" style="font-size: 2rem; opacity: 0.8;"></i>
+                            <h6 class="fw-bold">Fast</h6>
+                            <small class="opacity-75">Results in seconds</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.page-background {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.form-control-custom:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.25);
+}
+
+.card-custom {
+    border-radius: 20px;
+    border: none;
+    overflow: hidden;
+}
+
+.card-custom .card-header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+}
+
+.input-group .form-control-custom {
+    border-right: none;
+}
+
+.input-group .btn-outline-secondary {
+    border-color: #e5e7eb;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.input-group .btn-outline-secondary:hover {
+    background: #f3f4f6;
+    border-color: var(--primary-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-custom {
+    animation: fadeInUp 0.6s ease forwards;
+}
+</style>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+
+    // Toggle password visibility
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+    });
+
+    // Form submission with loading state
+    loginForm.addEventListener('submit', function() {
+        loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Signing In...';
+        loginBtn.disabled = true;
+    });
+
+    // Add focus effects
+    document.querySelectorAll('.form-control-custom').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.closest('.mb-4').querySelector('label').classList.add('text-primary');
+        });
+        
+        input.addEventListener('blur', function() {
+            if (!this.value) {
+                this.closest('.mb-4').querySelector('label').classList.remove('text-primary');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
