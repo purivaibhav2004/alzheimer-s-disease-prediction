@@ -80,7 +80,8 @@ The main objective of this project is to support **early detection of Alzheimerâ
 )
 
 ### ðŸ”¹ Prediction Result
-![Prediction](<img width="1879" height="899" alt="Screenshot 2025-10-04 204247" src="https://github.com/user-attachments/assets/423ad052-7b04-46bb-816f-87ed39452891" />
+![Prediction](<img width="1879" height="899" alt="Screenshot 2025-10-04 204247" src="https://github.com/user-attachments/assets/609f18f4-4c5c-4fd3-ad75-a6765cf3af8d" />
+
 )
 
 ---
